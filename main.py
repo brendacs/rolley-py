@@ -34,7 +34,12 @@ async def on_reaction_add(reaction, user):
     if user == bot.user:
         return
 
+    # TODO: check which channel this is being done in
+    # TODO: check if one of the clearing emojis were clicked -> remove_all_roles
     role = reaction_to_role(reaction)
     add_role(bot, user, role)
+
+
+# TODO: on_reaction_remove
 
 bot.run(TOKEN)

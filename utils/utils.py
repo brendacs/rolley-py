@@ -1,10 +1,12 @@
-from discord.utils import get
 from settings import ROLES
 
 
 def is_mod_or_admin(message):
     perms = message.author.server_permissions
     return perms.manage_roles or perms.administrator
+
+
+# TODO: move the below to a separate role handler
 
 
 def reaction_to_role(reaction):
@@ -38,3 +40,10 @@ def add_role(bot, user, role):
             role_to_add = r
             break
     bot.add_roles(user, role_to_add)
+
+
+# TODO: remove_role
+
+# TODO: remove_all_roles
+
+# TODO: helper to check if any roles user has are not self-assignable -> do not remove these in remove_all_roles
