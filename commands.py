@@ -26,3 +26,5 @@ async def init(bot, message):
                     reaction = emoji
                 await bot.add_reaction(init_message, reaction)
             i = i + 1
+
+    # TODO: disable access to unlisted emotes
