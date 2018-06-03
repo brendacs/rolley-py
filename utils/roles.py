@@ -10,7 +10,8 @@ def reaction_to_role(reaction):
 
     role = None
     for i in range(len(ROLES)):
-        curr_roles = ROLES[i][1]
+        role_group = list(sorted(ROLES.keys()))[i]
+        curr_roles = ROLES[role_group]
         for r, e in curr_roles.items():
             if e == emoji:
                 role = r
@@ -19,27 +20,26 @@ def reaction_to_role(reaction):
 
 def user_has_role(user, role):
     for r in user.roles:
-        if r.name == role:
+        if r.name == role or r == role:
             return True
     return False
 
 
 # check if user already has role in category where they can only have one e.g., seniority
 def user_has_single_use_category(user, *categories):
-    for rname in categories:
-        if user_has_role(user, rname):
-            return True
-    return False
+    for category in categories:
+        for role_name in category:
+            if user_has_role(user, role_name):
+                return True
+        return False
 
 
 # check that role is not none and is a server role
 def is_valid_role(user, role):
-    serv_roles = []
     for r in user.server.roles:
-        serv_roles.append(r.name)
-
-    if role is None or role not in serv_roles:
-        return False
+        if r.name == role:
+            return True
+    return False
 
 
 # check if role is accessible
@@ -49,10 +49,12 @@ def is_accessible_role(role):
     return True
 
 
+# adds a role to user
 async def add_role(bot, user, role):
-    seniority_roles = ROLES["seniorities"].keys()
+    seniority_roles = list(ROLES["seniorities"].keys())
     if not is_valid_role(user, role) or user_has_role(user, role) \
-            or user_has_single_use_category(user, seniority_roles):
+            or (user_has_single_use_category(user, seniority_roles)
+                and role in seniority_roles):
         return
 
     try:
