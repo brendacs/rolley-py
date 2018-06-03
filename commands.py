@@ -1,5 +1,6 @@
 import discord
-from settings import ROLES, TITLES, MESSAGES
+from settings import ROLES
+from utils.embeds import Embed
 from discord.utils import get
 from utils.utils import is_mod_or_admin
 
@@ -15,9 +16,10 @@ async def init(bot, message):
     else:
         await bot.send_message(message.channel, "Initiating...")
 
-        i = 0
-        for msg in MESSAGES:
-            init_embed = discord.Embed(title=TITLES[i], type='rich', description=msg, color=0xffffff)
+        all_paired_embeds = Embed.create_embeds()
+        for i in range(len(all_paired_embeds) - 1):
+            init_embed = discord.Embed(title=all_paired_embeds[i].title, type='rich',
+                                       description=all_paired_embeds[i].description, color=0xffffff)
             init_message = await bot.send_message(message.channel, embed=init_embed)
             curr_roles = ROLES[i][1]
             for key, emoji in curr_roles.items():
@@ -25,6 +27,5 @@ async def init(bot, message):
                 if reaction is None:
                     reaction = emoji
                 await bot.add_reaction(init_message, reaction)
-            i = i + 1
 
     # TODO: disable access to unlisted emotes

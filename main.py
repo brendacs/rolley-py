@@ -1,7 +1,7 @@
 import discord
 from settings import TOKEN, PREFIX
 import commands
-from utils.utils import add_role, reaction_to_role
+from utils.roles import add_role, reaction_to_role
 
 bot = discord.Client();
 
