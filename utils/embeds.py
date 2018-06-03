@@ -1,4 +1,4 @@
-from settings import EMBEDS
+from utils.config import EMBEDS
 
 
 class Embed(object):
@@ -8,7 +8,8 @@ class Embed(object):
 
     @staticmethod
     def create_embeds():
+        title, message = 0, 1
         all_paired_embeds = []
-        for i in range(len(EMBEDS) - 1):
-            all_paired_embeds.append(Embed(EMBEDS[i], EMBEDS[i + 1]))
+        for i in range(len(EMBEDS)):
+            all_paired_embeds.append(Embed(EMBEDS[i][title], EMBEDS[i][message]))
         return all_paired_embeds

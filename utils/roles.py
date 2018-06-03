@@ -1,5 +1,5 @@
 import discord
-from settings import ROLES
+from utils.config import ROLES, INACCESSIBLE_ROLES
 from discord.utils import get
 
 
@@ -18,37 +18,71 @@ def reaction_to_role(reaction):
 
 
 def user_has_role(user, role):
-    user_roles = []
     for r in user.roles:
-        user_roles.append(r.name)
-    return role in user_roles
+        if r.name == role:
+            return True
+    return False
 
 
-# TODO: check if user already has role in category where they can only have one e.g., seniority
+# check if user already has role in category where they can only have one e.g., seniority
+def user_has_single_use_category(user, *categories):
+    for rname in categories:
+        if user_has_role(user, rname):
+            return True
+    return False
 
 
-async def add_role(bot, user, role):
-    if user_has_role(user, role):
-        return
-
+# check that role is not none and is a server role
+def is_valid_role(user, role):
     serv_roles = []
     for r in user.server.roles:
         serv_roles.append(r.name)
 
     if role is None or role not in serv_roles:
+        return False
+
+
+# check if role is accessible
+def is_accessible_role(role):
+    if role in INACCESSIBLE_ROLES:
+        return False
+    return True
+
+
+async def add_role(bot, user, role):
+    seniority_roles = ROLES["seniorities"].keys()
+    if not is_valid_role(user, role) or user_has_role(user, role) \
+            or user_has_single_use_category(user, seniority_roles):
         return
 
     try:
         role_to_add = get(user.server.roles, name=role)
         await bot.add_roles(user, role_to_add)
     except discord.Forbidden:
-        # TODO: bot should DM user to add permissions for bots
+        await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")
         return
 
-# TODO: remove_role
+
+# removes a role from user
+async def remove_role(bot, user, role):
+    if not is_valid_role(user, role) or not user_has_role(user, role):
+        return
+
+    all_user_roles = user.roles
+
+    for r in all_user_roles:
+        if r.name == role:
+            try:
+                await bot.remove_role(user, r)
+            except discord.Forbidden:
+                await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")
+                return
 
 
-# TODO: remove_all_roles
+# removes all roles from user
+async def remove_all_roles(bot, user):
+    all_user_roles = user.roles
 
-
-# TODO: helper to check if any roles user has are not self-assignable -> do not remove these in remove_all_roles
+    for r in all_user_roles:
+        if is_accessible_role(r.name):
+            await bot.remove_role(user, r)
