@@ -1,10 +1,11 @@
-import discord
-from utils.config import PREFIX, HOST_CHANNEL, ROLES
-import commands
-from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
 from os.path import join, dirname
 from dotenv import load_dotenv
 import os
+import discord
+from utils.config import PREFIX, HOST_CHANNEL, ROLES
+from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
+from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
+import commands
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -47,14 +48,19 @@ async def on_reaction_add(reaction, user):
     if channel_reacted_in != HOST_CHANNEL:
         return
 
-    # TODO: check if one of the clearing emojis were clicked -> remove_all_roles
-    clearing_emojis = list(ROLES["clears"].values())
-    if reaction.emoji in clearing_emojis or reaction.custom_emoji in clearing_emojis:
+    emoji = get_emoji_from_reaction(reaction)
+
+    # if a clearing emoji was clicked, remove all roles
+    if is_clearing_emoji(emoji):
         await remove_all_roles(bot, user)
 
-    # TODO: check if reaction is not already listed -> do not add or remove
-    role = reaction_to_role(reaction)
-    await add_role(bot, user, role)
+    # if emoji was not already listed, remove
+    elif not is_listed_emoji(emoji):
+        await bot.remove_reaction(reaction.message, reaction.emoji, user)
+
+    else:
+        role = reaction_to_role(reaction)
+        await add_role(bot, user, role)
 
 
 @bot.event

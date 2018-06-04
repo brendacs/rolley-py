@@ -2,7 +2,7 @@ import discord
 from utils.config import ROLES
 from utils.embeds import Embed
 from discord.utils import get
-from utils.utils import is_mod_or_admin
+from utils.perms import is_mod_or_admin
 
 
 async def help_cmd(bot, message):
@@ -30,5 +30,3 @@ async def init(bot, message):
                 if reaction is None:
                     reaction = emoji
                 await bot.add_reaction(init_message, reaction)
-
-    # TODO: disable access to unlisted emotes
