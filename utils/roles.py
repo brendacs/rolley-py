@@ -75,7 +75,7 @@ async def remove_role(bot, user, role):
     for r in all_user_roles:
         if r.name == role:
             try:
-                await bot.remove_role(user, r)
+                await bot.remove_roles(user, r)
             except discord.Forbidden:
                 await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")
                 return
@@ -87,4 +87,4 @@ async def remove_all_roles(bot, user):
 
     for r in all_user_roles:
         if is_accessible_role(r.name):
-            await bot.remove_role(user, r)
+            await bot.remove_roles(user, r)

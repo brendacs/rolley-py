@@ -27,7 +27,8 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if message.content.startswith(PREFIX):
+    if message.content.startswith(PREFIX) \
+            and message.channel.name == HOST_CHANNEL:
         command = message.content[1:]
         if command == 'help':
             await commands.help_cmd(bot, message)
