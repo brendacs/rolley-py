@@ -55,7 +55,7 @@ async def on_reaction_add(reaction, user):
         await remove_all_roles(bot, user)
 
     # if emoji was not already listed, remove
-    elif not is_listed_emoji(emoji):
+    elif not is_listed_emoji(emoji) and channel_reacted_in == HOST_CHANNEL:
         await bot.remove_reaction(reaction.message, reaction.emoji, user)
 
     else:
