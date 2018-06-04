@@ -71,7 +71,6 @@ async def remove_role(bot, user, role):
         return
 
     all_user_roles = user.roles
-
     for r in all_user_roles:
         if r.name == role:
             try:
@@ -84,7 +83,8 @@ async def remove_role(bot, user, role):
 # removes all roles from user
 async def remove_all_roles(bot, user):
     all_user_roles = user.roles
-
+    roles_to_remove = []
     for r in all_user_roles:
         if is_accessible_role(r.name):
-            await bot.remove_roles(user, r)
+            roles_to_remove.append(r)
+    await bot.remove_roles(user, *roles_to_remove)

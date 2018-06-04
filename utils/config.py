@@ -1,5 +1,5 @@
 PREFIX = '>'
-HOST_CHANNEL = '#roles'
+HOST_CHANNEL = 'roles'
 
 # INACCESSIBLE_ROLES = [role_name, role_name, ...]
 
@@ -21,6 +21,7 @@ ROLES = {
         'C#': 'csharp',
         'Go': 'go',
         'Haskell': 'haskell',
+        'Java': 'java',
         'Javascript': 'js',
         'Lisp': '👄',
         'Lua': 'lua',
