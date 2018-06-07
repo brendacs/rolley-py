@@ -1,10 +1,10 @@
 PREFIX = ">"
-HOST_CHANNEL = "roles"
+HOST_CHANNEL = "bot-development"
 
 # INACCESSIBLE_ROLES = [role_name, role_name, ...]
 
-INACCESSIBLE_ROLES = ["the imagineers", "Admin", "mods", "Interviewers",
-                      "Recruiter", "Hiring Manager", "Bot Creation", "Website Mod"]
+INACCESSIBLE_ROLES = {"the imagineers", "Admin", "mods", "Interviewers",
+                      "Recruiter", "Hiring Manager", "Bot Creation", "Website Mod"}
 
 # ROLES = { role_group: { role_name: emote_name, ... }, ... }
 # alphabetically order groups to keep correct order

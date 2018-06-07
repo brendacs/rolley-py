@@ -8,14 +8,11 @@ def reaction_to_role(reaction):
     if reaction.custom_emoji:
         emoji = reaction.emoji.name
 
-    role = None
-    for i in range(len(ROLES)):
-        role_group = list(sorted(ROLES.keys()))[i]
-        curr_roles = ROLES[role_group]
-        for r, e in curr_roles.items():
+    for subgroup in ROLES.values():
+        for r, e in subgroup.items():
             if e == emoji:
-                role = r
-    return role
+                return r
+    return None
 
 
 def user_has_role(user, role):
