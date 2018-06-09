@@ -6,46 +6,45 @@ HOST_CHANNEL = "bot-development"
 INACCESSIBLE_ROLES = {"the imagineers", "Admin", "mods", "Interviewers",
                       "Recruiter", "Hiring Manager", "Bot Creation", "Website Mod"}
 
-# ROLES = { role_group: { role_name: emote_name, ... }, ... }
-# alphabetically order groups to keep correct order
+# ROLES = { role_group: { emoji : label, ... }, ... }
 
 ROLES = {
     'clears': {
-        '0': '❌',
-        '1': '🙅',
-        '2': 'stopblob'
+        '❌'        :'0', 
+        '🙅'        :'1',
+        'stopblob' :'2'
     },
     'languages': {
-        'C++': 'c_plus',
-        'C': 'c_reg',
-        'C#': 'c_sharp',
-        'Go': 'go',
-        'Haskell': 'haskell',
-        'Java': 'java',
-        'Javascript': 'js',
-        'Lisp': '👄',
-        'Lua': 'lua',
-        'Objective-C': 'obj_c',
-        'PHP': 'php',
-        'Python': 'python',
-        'R': '🇷',
-        'Ruby': 'ruby',
-        'Rust': 'rust',
-        'Scala': 'scala',
-        'SQL': 'sql',
-        'Swift': 'swift'
+        'c_plus'   :'C++',
+        'c_reg'    :'C',
+        'c_sharp'  :'C#',
+        'go'       :'Go',
+        'haskell'  :'Haskell',
+        'java'     :'Java',
+        'js'       :'Javascript',
+        '👄'        :'Lisp',
+        'lua'      :'Lua',
+        'obj_c'    :'Objective-C',
+        'php'      :'PHP',
+        'python'   :'Python',
+        '🇷'        :'R',
+        'ruby'     :'Ruby',
+        'rust'     :'Rust',
+        'scala'    :'Scala',
+        'sql'      :'SQL',
+        'swift'    :'Swift'
     },
     'seniorities': {
-        'Student': '🎓',
-        'Intern': '🤓',
-        'Junior Developer': '💼',
-        'Mid-level Developer': '👔',
-        'Senior Developer': '👴'
+        '🎓' : 'Student',  
+        '🤓' : 'Intern',
+        '💼' : 'Junior Developer', 
+        '👔' : 'Mid-level Developer',
+        '👴' : 'Senior Developer'
     },
     'xtra': {
-        'Notifications': '💡',
-        'Interview Notifications': '🔔',
-        'Military Veteran': 'vet'
+        '💡'  : 'Notifications',
+        '🔔'  : 'Interview Notifications',
+        'vet': 'Military Veteran'
     }
 }
 
