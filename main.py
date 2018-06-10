@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import discord
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
-from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
+from utils.roles import add_role, get_role_from_reaction, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
 import commands
 
@@ -59,7 +59,7 @@ async def on_reaction_add(reaction, user):
         await bot.remove_reaction(reaction.message, reaction.emoji, user)
 
     else:
-        role = reaction_to_role(reaction)
+        role = get_role_from_reaction(reaction)
         await add_role(bot, user, role)
 
 
@@ -67,7 +67,7 @@ async def on_reaction_add(reaction, user):
 async def on_reaction_remove(reaction, user):
     if user == bot.user:
         return
-    role = reaction_to_role(reaction)
+    role = get_role_from_reaction(reaction)
     await remove_role(bot, user, role)
 
 bot.run(TOKEN)

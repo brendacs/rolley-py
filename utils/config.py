@@ -6,7 +6,7 @@ HOST_CHANNEL = "bot-development"
 INACCESSIBLE_ROLES = {"the imagineers", "Admin", "mods", "Interviewers",
                       "Recruiter", "Hiring Manager", "Bot Creation", "Website Mod"}
 
-# ROLES = { role_group: { emoji : label, ... }, ... }
+# ROLES = { role_group: { emoji : role_label, ... }, ... }
 
 ROLES = {
     'clears': {
