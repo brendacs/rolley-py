@@ -1,6 +1,5 @@
 import discord
-from utils.config import ROLES, INACCESSIBLE_ROLES
-from discord.utils import get
+from config import ROLES, INACCESSIBLE_ROLES
 
 
 def reaction_to_role(reaction):
@@ -55,7 +54,7 @@ async def add_role(bot, user, role):
         return
 
     try:
-        role_to_add = get(user.server.roles, name=role)
+        role_to_add = discord.get(user.server.roles, name=role)
         await bot.add_roles(user, role_to_add)
     except discord.Forbidden:
         await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")

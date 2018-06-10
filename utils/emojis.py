@@ -1,4 +1,4 @@
-from utils.config import ROLES
+from config import ROLES
 
 
 def get_emoji_from_reaction(reaction):

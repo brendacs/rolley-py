@@ -1,4 +1,4 @@
-from utils.config import EMBEDS
+from config import EMBEDS
 
 
 class Embed(object):
