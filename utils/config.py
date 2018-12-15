@@ -20,6 +20,7 @@ ROLES = {
         'C++': 'c_plus',
         'C': 'c_reg',
         'C#': 'c_sharp',
+        'Erlang': 'erlang',
         'Go': 'go',
         'Haskell': 'haskell',
         'Java': 'java',
@@ -27,6 +28,7 @@ ROLES = {
         'Lisp': '👄',
         'Lua': 'lua',
         'Objective-C': 'obj_c',
+        'Ocaml': 'ocaml',
         'PHP': 'php',
         'Python': 'python',
         'R': '🇷',
@@ -34,9 +36,7 @@ ROLES = {
         'Rust': 'rust',
         'Scala': 'scala',
         'SQL': 'sql',
-        'Swift': 'swift',
-        'Ocaml': 'ocaml',
-        'Erlang': 'erlang'
+        'Swift': 'swift'
     },
     'seniorities': {
         'Student': '🎓',
@@ -67,6 +67,9 @@ EMBEDS = [
      "You are only allowed one seniority role that best reflects where you\'re at in your career. Student = :mortar_board:, Intern = :nerd:, Junior Developer = :briefcase:, "
      "Mid-level Developer = :necktie:, Senior Developer = :older_man:."),
     ("Miscellaneous", "These are utility roles, mostly. :bulb: to opt-in to **Global Notifications**, "
-     ":bell: to opt-in to **Interview Notifications**, "
-     "**Military Veteran**: for veterans.")
+     ":bell: to opt-in to **Interview Notifications**, ""**Military Veteran**: for veterans."),
+     ("Volunteering",
+     "We're always looking for volunteer **Interviewers** to help give mock-interviews. We also have roles reserved for "
+     "**Recruiters** and **Hiring Managers**. CSCH is a 501c3 non-profit organization so if you work for a company that has a matching program for volunteer "
+     "hours, you'll be able to submit those hours. Please pm a Mod or Admin if you'd like to have these roles assigned.")
 ]
