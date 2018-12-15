@@ -45,6 +45,9 @@ ROLES = {
         'Mid-level Developer': '👔',
         'Senior Developer': '👴'
     },
+    'volunteering':{
+        #Fixes index out of range due to commands.py call 'role_group = list(sorted(ROLES.keys()))[i]'
+    },
     'xtra': {
         'Notifications': '💡',
         'Interview Notifications': '🔔',
@@ -66,10 +69,10 @@ EMBEDS = [
     ("Seniority Roles",
      "You are only allowed one seniority role that best reflects where you\'re at in your career. Student = :mortar_board:, Intern = :nerd:, Junior Developer = :briefcase:, "
      "Mid-level Developer = :necktie:, Senior Developer = :older_man:."),
-    ("Miscellaneous", "These are utility roles, mostly. :bulb: to opt-in to **Global Notifications**, "
-     ":bell: to opt-in to **Interview Notifications**, ""**Military Veteran**: for veterans."),
      ("Volunteering",
      "We're always looking for volunteer **Interviewers** to help give mock-interviews. We also have roles reserved for "
      "**Recruiters** and **Hiring Managers**. CSCH is a 501c3 non-profit organization so if you work for a company that has a matching program for volunteer "
-     "hours, you'll be able to submit those hours. Please pm a Mod or Admin if you'd like to have these roles assigned.")
+     "hours, you'll be able to submit those hours. Please pm a Mod or Admin if you'd like to have these roles assigned."),
+    ("Miscellaneous", "These are utility roles, mostly. :bulb: to opt-in to **Global Notifications**, "
+     ":bell: to opt-in to **Interview Notifications**, ""**Military Veteran**: for veterans.") 
 ]
