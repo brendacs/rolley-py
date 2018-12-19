@@ -1,7 +1,8 @@
 from os.path import join, dirname
 from dotenv import load_dotenv
 import os
-import discord
+from discord.ext.commands import Bot
+
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
 from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
@@ -12,7 +13,8 @@ load_dotenv(dotenv_path)
 
 TOKEN = os.environ.get('TOKEN')
 
-bot = discord.Client();
+bot = Bot(command_prefix=PREFIX)
+bot.remove_command('help')
 
 
 @bot.event
@@ -21,22 +23,6 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print("------")
-
-
-@bot.event
-async def on_message(message):
-    if message.author.bot:
-        return
-
-    if message.content.startswith(PREFIX) \
-            and message.channel.name == HOST_CHANNEL:
-        command = message.content[1:]
-        if command == 'help':
-            await commands.help_cmd(bot, message)
-        elif command == 'init':
-            await commands.init(bot, message)
-    else:
-        return
 
 
 @bot.event
@@ -69,5 +55,20 @@ async def on_reaction_remove(reaction, user):
         return
     role = reaction_to_role(reaction)
     await remove_role(bot, user, role)
+
+
+@bot.command(name='help', description='returns info on all commands', brief='returns all usable commands',
+             pass_context=True)
+async def help(ctx):
+    if ctx.message.channel.name == HOST_CHANNEL:
+        await commands.help_cmd(bot, ctx)
+
+
+@bot.command(name='initialize', description='initializes bot in channel', aliases=['init'],
+             brief='bot start-up process', pass_context=True)
+async def init(ctx):
+    if ctx.message.channel.name == HOST_CHANNEL:
+        await commands.init(bot, ctx.message)
+
 
 bot.run(TOKEN)

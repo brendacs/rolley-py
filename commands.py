@@ -2,12 +2,17 @@ import discord
 from utils.config import ROLES
 from utils.embeds import Embed
 from discord.utils import get
+from discord.ext.commands import HelpFormatter
 from utils.perms import is_mod_or_admin
 
 
-async def help_cmd(bot, message):
-    help_embed = discord.Embed(title='Help', type='rich', description="Commands: help, init", color=0xffffff)
-    await bot.send_message(message.channel, embed=help_embed)
+formatter = HelpFormatter()
+
+
+async def help_cmd(bot, ctx):
+    pages = bot.formatter.format_help_for(ctx, bot)
+    for page in pages:
+        await bot.send_message(ctx.message.channel, page)
 
 
 async def init(bot, message):
