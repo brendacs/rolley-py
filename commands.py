@@ -26,17 +26,17 @@ async def help_cmd(bot, ctx, *args):
         await bot.send_message(ctx.message.channel, page)
 
 
-async def init(bot, message):
-    if not is_mod_or_admin(message):
-        await bot.send_message(message.channel, "Must be mod or admin to initiate")
+async def init(bot, channel, user):
+    if not is_mod_or_admin(user):
+        await bot.send_message(channel, "Must be mod or admin to initiate")
     else:
-        await bot.send_message(message.channel, "Initiating...")
+        await bot.send_message(channel, "Initiating...")
 
         all_paired_embeds = Embed.create_embeds()
         for i in range(0, len(all_paired_embeds)):
             init_embed = discord.Embed(title=all_paired_embeds[i].title, type='rich',
                                        description=all_paired_embeds[i].message, color=0xffffff)
-            init_message = await bot.send_message(message.channel, embed=init_embed)
+            init_message = await bot.send_message(channel, embed=init_embed)
 
             role_group = list(sorted(ROLES.keys()))[i]
             curr_roles = ROLES[role_group]
