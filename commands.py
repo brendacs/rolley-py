@@ -5,12 +5,23 @@ from discord.utils import get
 from discord.ext.commands import HelpFormatter
 from utils.perms import is_mod_or_admin
 
-
 formatter = HelpFormatter()
 
 
-async def help_cmd(bot, ctx):
-    pages = bot.formatter.format_help_for(ctx, bot)
+async def help_cmd(bot, ctx, *args):
+    if len(args) == 0:
+        pages = bot.formatter.format_help_for(ctx, bot)
+    else:
+        cmd_str = args[0][0]
+        command = bot.commands.get(cmd_str)
+
+        if command is None:
+            emb = discord.Embed(title='Command: {}'.format(cmd_str), type='rich',
+                                description='Invalid command entered', color=0xff0000)
+            await bot.send_message(ctx.message.channel, embed=emb)
+            return
+        else:
+            pages = bot.formatter.format_help_for(ctx, command)
     for page in pages:
         await bot.send_message(ctx.message.channel, page)
 

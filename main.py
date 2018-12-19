@@ -2,7 +2,6 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 import os
 from discord.ext.commands import Bot
-
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
 from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
@@ -59,9 +58,12 @@ async def on_reaction_remove(reaction, user):
 
 @bot.command(name='help', description='returns info on all commands', brief='returns all usable commands',
              pass_context=True)
-async def help(ctx):
+async def help(ctx, *args):
     if ctx.message.channel.name == HOST_CHANNEL:
-        await commands.help_cmd(bot, ctx)
+        if len(args) == 0:
+            await commands.help_cmd(bot, ctx)
+        else:
+            await commands.help_cmd(bot, ctx, args)
 
 
 @bot.command(name='initialize', description='initializes bot in channel', aliases=['init'],
