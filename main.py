@@ -1,4 +1,6 @@
 from os.path import join, dirname
+
+from discord import Game
 from dotenv import load_dotenv
 import os
 from discord.ext.commands import Bot
@@ -18,6 +20,7 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(game=Game(name="Leetcode"))
     print("Logged in as")
     print(bot.user.name)
     print(bot.user.id)
