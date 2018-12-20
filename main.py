@@ -3,6 +3,7 @@ from os.path import join, dirname
 from discord import Game
 from dotenv import load_dotenv
 import os
+from discord.utils import get
 from discord.ext.commands import Bot
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
 from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
@@ -18,6 +19,26 @@ bot = Bot(command_prefix=PREFIX)
 bot.remove_command('help')
 
 
+async def run_cleanup():
+    print("started cleanup")
+    channel = get(bot.get_all_channels(), name=HOST_CHANNEL)
+    if channel is None:
+        print("Could not locate channel: {}".format(HOST_CHANNEL))
+        return
+    else:
+        author = None
+        async for message in bot.logs_from(channel):
+            if message.author.id == bot.user.id:
+                author = message.author
+                await bot.delete_message(message)
+
+        if author is None:
+            print("Could not re-add reaction messages. Admin must manually run >init")
+        else:
+            await commands.init(bot, channel, author)
+    print("Finished cleaning up {} channel".format(HOST_CHANNEL))
+
+
 @bot.event
 async def on_ready():
     await bot.change_presence(game=Game(name="Leetcode"))
@@ -25,6 +46,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print("------")
+    await run_cleanup()
 
 
 @bot.event
@@ -73,7 +95,7 @@ async def help(ctx, *args):
              brief='bot start-up process', pass_context=True)
 async def init(ctx):
     if ctx.message.channel.name == HOST_CHANNEL:
-        await commands.init(bot, ctx.message)
+        await commands.init(bot, ctx.message.channel, ctx.message.author)
 
 
 bot.run(TOKEN)
