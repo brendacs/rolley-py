@@ -57,6 +57,7 @@ async def add_role(bot, user, role):
     try:
         role_to_add = get(user.server.roles, name=role)
         await bot.add_roles(user, role_to_add)
+        await bot.send_message(user, "Added **{}** to active roles in _CS Career Hackers_".format(role_to_add))
     except discord.Forbidden:
         await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")
         return
@@ -72,6 +73,7 @@ async def remove_role(bot, user, role):
         if r.name == role:
             try:
                 await bot.remove_roles(user, r)
+                await bot.send_message(user, "Removed **{}** from active roles in _CS Career Hackers_".format(r))
             except discord.Forbidden:
                 await bot.send_message(user, "Please give bot Manage Role permissions or notify an admin")
                 return
