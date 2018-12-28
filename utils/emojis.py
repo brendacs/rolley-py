@@ -9,7 +9,7 @@ def get_emoji_from_reaction(reaction):
 
 
 def is_clearing_emoji(emoji):
-    clearing_emojis = list(ROLES["clears"].values())
+    clearing_emojis = ROLES["clears"].values()
     if emoji in clearing_emojis:
         return True
     return False
@@ -18,7 +18,7 @@ def is_clearing_emoji(emoji):
 def get_all_listed_emojis():
     all_emojis = []
     for group, pair in ROLES.items():
-        all_emojis += list(pair.values())
+        all_emojis += pair.values()
     return all_emojis
 
 

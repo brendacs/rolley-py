@@ -3,9 +3,9 @@ HOST_CHANNEL = "bot-development"
 
 # INACCESSIBLE_ROLES = [role_name, role_name, ...]
 
-INACCESSIBLE_ROLES = {"the imagineers", "Admin", "mods", "Interviewers",
+INACCESSIBLE_ROLES = {"the whats role role", "Admin", "Mods", "Interviewers",
                       "Recruiter", "Hiring Manager", "Bot Creation", "Website Mod", 
-                      "ChannelMod", "dory-team", "Temporary Mute"}
+                      "Channel Mod", "Dory Team", "Temporary Mute"}
 
 # ROLES = { role_group: { role_name: emote_name, ... }, ... }
 # alphabetically order groups to keep correct order
@@ -46,7 +46,7 @@ ROLES = {
         'Senior Developer': '👴'
     },
     'volunteering':{
-        #Fixes index out of range due to commands.py call 'role_group = list(sorted(ROLES.keys()))[i]'
+        # Fixes index out of range due to commands.py call 'role_group = sorted(ROLES.keys())[i]'
     },
     'xtra': {
         'Notifications': '💡',

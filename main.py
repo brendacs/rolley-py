@@ -1,10 +1,11 @@
+import os
 from os.path import join, dirname
+from dotenv import load_dotenv
 
 from discord import Game
-from dotenv import load_dotenv
-import os
 from discord.utils import get
 from discord.ext.commands import Bot
+
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
 from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
@@ -20,7 +21,7 @@ bot.remove_command('help')
 
 
 async def run_cleanup():
-    print("started cleanup")
+    print("Started cleanup")
     channel = get(bot.get_all_channels(), name=HOST_CHANNEL)
     if channel is None:
         print("Could not locate channel: {}".format(HOST_CHANNEL))

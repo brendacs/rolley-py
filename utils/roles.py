@@ -48,7 +48,7 @@ def is_accessible_role(role):
 
 # adds a role to user
 async def add_role(bot, user, role):
-    seniority_roles = list(ROLES["seniorities"].keys())
+    seniority_roles = ROLES["seniorities"].keys()
     if not is_valid_role(user, role) or user_has_role(user, role) \
             or (user_has_single_use_category(user, seniority_roles)
                 and role in seniority_roles):

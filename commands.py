@@ -4,10 +4,10 @@ from discord.utils import get
 from discord.ext.commands import HelpFormatter
 from utils.perms import is_mod_or_admin
 
-formatter = HelpFormatter()
-
 
 async def help_cmd(bot, ctx, *args):
+    formatter = HelpFormatter()
+
     if len(args) == 0:
         pages = bot.formatter.format_help_for(ctx, bot)
     else:
@@ -37,7 +37,7 @@ async def init(bot, channel, user):
                                        description=EMBEDS[i][message], color=0xffffff)
             init_message = await bot.send_message(channel, embed=init_embed)
 
-            role_group = list(sorted(ROLES.keys()))[i]
+            role_group = sorted(ROLES.keys())[i]
             curr_roles = ROLES[role_group]
             for r, emoji in curr_roles.items():
                 reaction = get(bot.get_all_emojis(), name=emoji)
