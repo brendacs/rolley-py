@@ -1,6 +1,5 @@
 import discord
-from utils.config import ROLES
-from utils.embeds import Embed
+from utils.config import ROLES, EMBEDS
 from discord.utils import get
 from discord.ext.commands import HelpFormatter
 from utils.perms import is_mod_or_admin
@@ -32,10 +31,10 @@ async def init(bot, channel, user):
     else:
         await bot.send_message(channel, "Initiating...")
 
-        all_paired_embeds = Embed.create_embeds()
-        for i in range(0, len(all_paired_embeds)):
-            init_embed = discord.Embed(title=all_paired_embeds[i].title, type='rich',
-                                       description=all_paired_embeds[i].message, color=0xffffff)
+        for i in range(len(EMBEDS)):
+            title, message = 0, 1
+            init_embed = discord.Embed(title=EMBEDS[i][title], type='rich',
+                                       description=EMBEDS[i][message], color=0xffffff)
             init_message = await bot.send_message(channel, embed=init_embed)
 
             role_group = list(sorted(ROLES.keys()))[i]

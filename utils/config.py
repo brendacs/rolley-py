@@ -1,5 +1,5 @@
 PREFIX = ">"
-HOST_CHANNEL = "roles"
+HOST_CHANNEL = "bot-development"
 
 # INACCESSIBLE_ROLES = [role_name, role_name, ...]
 
