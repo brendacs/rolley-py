@@ -7,6 +7,7 @@ from discord.utils import get
 from discord.ext.commands import Bot
 
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
+from utils.utils import should_ignore
 from utils.roles import add_role, get_role_from_reaction, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
 import commands
@@ -56,42 +57,35 @@ async def on_ready():
 async def on_reaction_add(reaction, user):
     """ When reaction is added, dispatch correct action """
 
-    if user == bot.user:
-        return
+    if not should_ignore(bot, reaction.message.channel, user):
+        emoji = get_emoji_from_reaction(reaction)
 
-    channel_reacted_in = reaction.message.channel.name
-    if channel_reacted_in != HOST_CHANNEL:
-        return
+        # if a clearing emoji was clicked, remove all roles
+        if is_clearing_emoji(emoji):
+            await remove_all_roles(bot, user)
 
-    emoji = get_emoji_from_reaction(reaction)
+        # if emoji was not already listed, remove
+        elif not is_listed_emoji(emoji):
+            await bot.remove_reaction(reaction.message, reaction.emoji, user)
 
-    # if a clearing emoji was clicked, remove all roles
-    if is_clearing_emoji(emoji):
-        await remove_all_roles(bot, user)
-
-    # if emoji was not already listed, remove
-    elif not is_listed_emoji(emoji) and channel_reacted_in == HOST_CHANNEL:
-        await bot.remove_reaction(reaction.message, reaction.emoji, user)
-
-    else:
-        role = get_role_from_reaction(reaction)
-        await add_role(bot, user, role)
+        else:
+            role = get_role_from_reaction(reaction)
+            await add_role(bot, user, role)
 
 
 @bot.event
 async def on_reaction_remove(reaction, user):
     """ When user removes reaction, remove role from user """
 
-    if user == bot.user:
-        return
-    role = get_role_from_reaction(reaction)
-    await remove_role(bot, user, role)
+    if not should_ignore(bot, reaction.message.channel, user):
+        role = get_role_from_reaction(reaction)
+        await remove_role(bot, user, role)
 
 
 @bot.command(name='help', description='returns info on all commands', brief='returns all usable commands',
              pass_context=True)
 async def help(ctx, *args):
-    if ctx.message.channel.name == HOST_CHANNEL:
+    if not should_ignore(bot, ctx.message.channel, ctx.message.author):
         if len(args) == 0:
             await commands.help_cmd(bot, ctx)
         else:
@@ -101,7 +95,7 @@ async def help(ctx, *args):
 @bot.command(name='initialize', description='initializes bot in channel', aliases=['init'],
              brief='bot start-up process', pass_context=True)
 async def init(ctx):
-    if ctx.message.channel.name == HOST_CHANNEL:
+    if not should_ignore(bot, ctx.message.channel, ctx.message.author):
         await commands.init(bot, ctx.message.channel, ctx.message.author)
 
 

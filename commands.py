@@ -2,7 +2,7 @@ import discord
 from utils.config import ROLES, EMBEDS
 from discord.utils import get
 from discord.ext.commands import HelpFormatter
-from utils.perms import is_mod_or_admin
+from utils.utils import is_mod_or_admin
 
 
 async def help_cmd(bot, ctx, *args):
