@@ -10,20 +10,16 @@ def get_emoji_from_reaction(reaction):
 
 def is_clearing_emoji(emoji):
     clearing_emojis = ROLES["clears"].values()
-    if emoji in clearing_emojis:
-        return True
-    return False
+    return emoji in clearing_emojis
 
 
 def get_all_listed_emojis():
     all_emojis = []
     for group, pair in ROLES.items():
         all_emojis += pair.values()
-    return all_emojis
+    return set(all_emojis)
 
 
 def is_listed_emoji(emoji):
     all_emojis = get_all_listed_emojis()
-    if emoji in all_emojis:
-        return True
-    return False
+    return emoji in all_emojis

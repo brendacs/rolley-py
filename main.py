@@ -7,7 +7,7 @@ from discord.utils import get
 from discord.ext.commands import Bot
 
 from utils.config import PREFIX, HOST_CHANNEL, ROLES
-from utils.roles import add_role, reaction_to_role, remove_role, remove_all_roles
+from utils.roles import add_role, get_role_from_reaction, remove_role, remove_all_roles
 from utils.emojis import get_emoji_from_reaction, is_clearing_emoji, is_listed_emoji
 import commands
 
@@ -21,6 +21,8 @@ bot.remove_command('help')
 
 
 async def run_cleanup():
+    """ Removes all bot messages from HOST_CHANNEL and re-initiates """
+
     print("Started cleanup")
     channel = get(bot.get_all_channels(), name=HOST_CHANNEL)
     if channel is None:
@@ -52,6 +54,8 @@ async def on_ready():
 
 @bot.event
 async def on_reaction_add(reaction, user):
+    """ When reaction is added, dispatch correct action """
+
     if user == bot.user:
         return
 
@@ -70,15 +74,17 @@ async def on_reaction_add(reaction, user):
         await bot.remove_reaction(reaction.message, reaction.emoji, user)
 
     else:
-        role = reaction_to_role(reaction)
+        role = get_role_from_reaction(reaction)
         await add_role(bot, user, role)
 
 
 @bot.event
 async def on_reaction_remove(reaction, user):
+    """ When user removes reaction, remove role from user """
+
     if user == bot.user:
         return
-    role = reaction_to_role(reaction)
+    role = get_role_from_reaction(reaction)
     await remove_role(bot, user, role)
 
 
